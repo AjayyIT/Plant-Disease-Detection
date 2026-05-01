@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Plant Disease Detection</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<div class="overlay"></div>
+
+<div class="app">
+
+    <h1>🌿 Plant Disease Detection</h1>
+
+    <form action="/predict" method="post" enctype="multipart/form-data">
+
+        <label class="upload-box">
+            <input type="file" name="image" required onchange="previewImage(event)">
+            📁 Upload Leaf Image
+        </label>
+
+        <img id="preview" src="#" alt="Preview">
+
+        <button type="submit">🔍 Detect Disease</button>
+
+    </form>
+
+    {% if result %}
+    <div class="result-card">
+
+        <h2>{{ result }}</h2>
+
+        <p class="confidence">Confidence: {{ confidence }}%</p>
+
+        <p class="treatment">
+            <b>Treatment:</b> {{ treatment }}
+        </p>
+
+    </div>
+    {% endif %}
+
+</div>
+
+<script>
+function previewImage(event) {
+    const preview = document.getElementById('preview');
+    preview.src = URL.createObjectURL(event.target.files[0]);
+    preview.style.display = "block";
+}
+</script>
+
+</body>
+</html>
